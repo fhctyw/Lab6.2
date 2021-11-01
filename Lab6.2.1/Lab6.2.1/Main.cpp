@@ -34,14 +34,16 @@ void ModifyArray(int arr[], const int size)
 		if (arr[i] % 2 != 0)
 			m = max(arr[i], m);
 	}
-	arr[size-1] = m;
+	if (m != numeric_limits<int>::min())
+		arr[size-1] = m;
 }
 
 int main()
 {
 	srand(time(0));
-	const int n = 10;
+	const int n = 2;
 	int a[n];
+
 	InitArray(a, n);
 	PrintArray(a, n);
 	ModifyArray(a, n);
