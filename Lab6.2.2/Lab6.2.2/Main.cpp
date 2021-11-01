@@ -47,13 +47,17 @@ void ModifyArray(int arr[], const int size, int i, int m = numeric_limits<int>::
 int main()
 {
 	srand(time(0));
-	const int n = 10;
-	int a[n];
+	int n;
+	cout << "n = "; cin >> n;
+	int *a = new int[n];
 
 	InitArray(a, n, 0);
 	PrintArray(a, n, 0);
 	ModifyArray(a, n, 0);
 	PrintArray(a, n, 0);
+
+	delete[] a;
+	a = nullptr;
 
 	return 0;
 }

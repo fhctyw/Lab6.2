@@ -6,12 +6,10 @@
 #include <iostream>
 using namespace std;
 
-void InitArray(int arr[], const int size)
+void InitArray(int *arr, const int size)
 {
 	for (size_t i = 0; i < size; i++)
-	{
 		arr[i] = -10 + rand() % 21;
-	}
 }
 
 void PrintArray(const int* const arr, const int size)
@@ -41,13 +39,18 @@ void ModifyArray(int arr[], const int size)
 int main()
 {
 	srand(time(0));
-	const int n = 10;
-	int a[n];
+	int n;
+	cout << "n = "; cin >> n;
+	
+	int* a = new int[n];
 
 	InitArray(a, n);
 	PrintArray(a, n);
 	ModifyArray(a, n);
 	PrintArray(a, n);
 
+	delete[] a;
+	a = nullptr;
+	
 	return 0;
 }
