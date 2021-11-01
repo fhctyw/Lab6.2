@@ -41,7 +41,7 @@ void ModifyArray(int arr[], const int size)
 int main()
 {
 	srand(time(0));
-	const int n = 10;
+	const int n = 2;
 	int a[n];
 
 	InitArray(a, n);
