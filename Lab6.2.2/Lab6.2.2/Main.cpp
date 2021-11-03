@@ -3,6 +3,8 @@
 // Лабораторна робота № 6.2
 // Опрацювання одновимірних масивів ітераційними та рекурсивними способами
 // Варіант 36(Рекурсивний спосіб)
+#define NOMINMAX
+#include <Windows.h>
 #include <iostream>
 using namespace std;
 
@@ -31,21 +33,32 @@ void PrintArray(const int* const arr, const int size, int i)
 	}
 }
 
-void ModifyArray(int arr[], const int size, int i, int m = numeric_limits<int>::min())
+int IndexMax(const int* arr, int size, int max, int index, int i)
 {
-	if (i < size)
-	{
-		if (arr[i] % 2 != 0)
-			m = max(arr[i], m);
-		if (i == size - 1 && m != numeric_limits<int>::min())
-			arr[i] = m;
-		ModifyArray(arr, size, i + 1, m);
-		return;
+	if (arr[i] > max && arr[i] % 2 != 0) {
+		index = i;
+		max = arr[i];
 	}
+	if (i < size)
+		return IndexMax(arr, size, max, index, i + 1);
+	else
+		return index;
+}
+
+bool ModifyArray(int arr[], const int size)
+{
+	int index = IndexMax(arr, size, -11, -1, 0); // -11 = Low - 1
+	if (index != -1) {
+		arr[size - 1] = arr[index];
+		return true;
+	}
+	else return false;
 }
 
 int main()
 {
+	SetConsoleOutputCP(1251);
+
 	srand(time(0));
 	int n;
 	cout << "n = "; cin >> n;
@@ -53,7 +66,8 @@ int main()
 
 	InitArray(a, n, 0);
 	PrintArray(a, n, 0);
-	ModifyArray(a, n, 0);
+	if (!ModifyArray(a, n))
+		cout << "Немає жодного елемента, який підходить по умовам" << endl;
 	PrintArray(a, n, 0);
 
 	delete[] a;

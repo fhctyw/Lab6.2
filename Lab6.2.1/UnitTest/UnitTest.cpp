@@ -12,8 +12,8 @@ namespace UnitTest
 		TEST_METHOD(TestMethod1)
 		{
 			int A[] = { -4, 0, -1, 4 };
-			ModifyArray(A, 4);
-			Assert::AreEqual(-1, A[3]);
+			bool b = ModifyArray(A, 4);
+			Assert::AreEqual(true, b);
 		}
 	};
 }
