@@ -26,13 +26,26 @@ void PrintArray(const int* const arr, const int size)
 	cout << "}" << endl;
 }
 
+int IndexFirstByCondition(const int arr[], const int size)
+{
+	int index = -1;
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] % 2 != 0) {
+			index = i;
+			break;
+		}
+	}
+	return index;
+}
+
 int IndexMax(int arr[], const int size)
 {
-	int max = arr[0] % 2 != 0 ? arr[0] : -11;	// -11 = Low - 1, щоб умова в 34 рядку спрацювала коректно навіть, 
-	int index = -1;								// якщо число парне
-	for (int i = 1; i < size; i++)
-		if (arr[i] > max && arr[i] % 2 != 0)
-		{
+	int index = IndexFirstByCondition(arr, size);
+	if (index == -1) return index;
+	int max = arr[index];
+	for (int i = 0; i < size; i++)
+		if (arr[i] > max && arr[i] % 2 != 0) {
 			index = i;
 			max = arr[i];
 		}
@@ -42,8 +55,11 @@ int IndexMax(int arr[], const int size)
 bool ModifyArray(int arr[], const int size)
 {
 	int index = IndexMax(arr, size);
-	if (index != -1) {
+	if (index != -1)
+	{
+		int tmp = arr[size - 1];
 		arr[size - 1] = arr[index];
+		arr[index] = tmp;
 		return true;
 	}
 	else return false;

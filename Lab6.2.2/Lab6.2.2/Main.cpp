@@ -14,7 +14,6 @@ void InitArray(int arr[], const int size, int i)
 	{
 		arr[i] = -10 + rand() % 21;
 		InitArray(arr, size, i + 1);
-		return;
 	}
 }
 
@@ -33,23 +32,44 @@ void PrintArray(const int* const arr, const int size, int i)
 	}
 }
 
-int IndexMax(const int* arr, int size, int max, int index, int i)
+void IndexFirstByCondition(const int arr[], const int size, int &index, int i)
 {
-	if (arr[i] > max && arr[i] % 2 != 0) {
-		index = i;
-		max = arr[i];
-	}
 	if (i < size)
-		return IndexMax(arr, size, max, index, i + 1);
-	else
-		return index;
+	{
+		if (arr[i] % 2 != 0)
+		{
+			index = i;
+			return;
+		}
+		IndexFirstByCondition(arr, size, index, i + 1);
+	}
+}
+
+void IndexMax(const int* arr, int size, int &max, int &index, int i)
+{
+	if (i < size)
+	{
+		if (arr[i] > max && arr[i] % 2 != 0) {
+			index = i;
+			max = arr[i];
+		}
+		IndexMax(arr, size, max, index, i + 1);
+		return;
+	}
 }
 
 bool ModifyArray(int arr[], const int size)
 {
-	int index = IndexMax(arr, size, -11, -1, 0); // -11 = Low - 1
+	int index, min;
+	IndexFirstByCondition(arr, size, index, 0);
+	min = arr[index];
+
+	IndexMax(arr, size, min, index, 0);
 	if (index != -1) {
+
+		int tmp = arr[size - 1];
 		arr[size - 1] = arr[index];
+		arr[index] = tmp;
 		return true;
 	}
 	else return false;
